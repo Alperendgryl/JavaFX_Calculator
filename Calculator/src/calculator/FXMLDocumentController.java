@@ -11,142 +11,148 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private Label label;
-    private String currentNumber = "";
-
+    
     @FXML
-    private void addNumber(String number) {
-        currentNumber += number;
-        label.setText(currentNumber);
+    private Label label1;
+
+    private double result = 0;
+    private String currentNumberStr = "";
+
+    private void compute(String operation) {
+        
+        double currentNum = Double.parseDouble(currentNumberStr);
+        currentNumberStr = " ";
+        label1.setText(currentNum + " " + operation);
+        
+        switch (operation) {
+            case "%":
+                result = result % currentNum;
+                break;
+            case "/":
+                result /= currentNum;
+                break;
+            case "*":
+                result *= currentNum;
+                break;
+            case "-":
+                result -= currentNum;
+                break;
+            case "+":
+                result += currentNum;
+                break;
+            case "=":
+                break;
+            default:
+                break;
+        }
+        
+        label1.setText(result + " " + operation);
+        label.setText(result + " ");
     }
 
     @FXML
+    private void addNumber(String number) {
+        currentNumberStr += number;
+        label.setText(currentNumberStr);
+    }
+
+    @FXML
+    private void division(ActionEvent event) {
+        compute("/");
+    }
+
+    @FXML
+    private void multiplication(ActionEvent event) {
+        compute("*");
+    }
+
+    @FXML
+    private void substraction(ActionEvent event) {
+        compute("-");
+    }
+
+    @FXML
+    private void addition(ActionEvent event) {
+        compute("+");
+    }
+
+    @FXML
+    private void result(ActionEvent event) {
+        compute("=");
+    }
+    
+    @FXML
     private void ce(ActionEvent event) {
-        currentNumber = "";
+        result = 0;
+        currentNumberStr = "";
         label.setText("");
+        label1.setText("");
         System.out.println("ce");
     }
 
     @FXML
     private void c(ActionEvent event) {
-        currentNumber = "";
+        result = 0;
+        currentNumberStr = "";
         label.setText("");
+        label1.setText("");
         System.out.println("c");
     }
 
     @FXML
     private void delete(ActionEvent event) {
-        if (!currentNumber.equals("")) {
-            currentNumber = removeLastChar(currentNumber);
-            label.setText(currentNumber);
+        if (!currentNumberStr.equals("")) {
+            currentNumberStr = removeLastChar(currentNumberStr);
+            label.setText(currentNumberStr);
         }
         System.out.println("delete");
     }
 
     @FXML
     private void oneOverX(ActionEvent event) {
-        double currentNum = Double.parseDouble(currentNumber);
+        double currentNum = Double.parseDouble(currentNumberStr);
         if (currentNum != 0) {
-            String result = 1 / currentNum + "";
-            setLabelText(result);
+            String resultStr = 1 / currentNum + "";
+            setLabelText(resultStr);
         } else {
             setLabelText("undefined");
         }
-        
         System.out.println("1/x");
     }
 
     @FXML
     private void xSquare(ActionEvent event) {
-        double currentNum = Double.parseDouble(currentNumber);
-        String result = currentNum * currentNum + "";
-        setLabelText(result);
-        
+        double currentNum = Double.parseDouble(currentNumberStr);
+        String resultStr = currentNum * currentNum + "";
+        setLabelText(resultStr);
         System.out.println("x^2");
     }
 
     @FXML
     private void rootX(ActionEvent event) {
-        double currentNum = Double.parseDouble(currentNumber);
-        String result = Math.sqrt(currentNum) + "";
-        setLabelText(result);
-        
+        double currentNum = Double.parseDouble(currentNumberStr);
+        String resultStr = Math.sqrt(currentNum) + "";
+        setLabelText(resultStr);
         System.out.println("rootX");
-    }
-
-    private void operation(String operation) {
-
-        String temp = currentNumber;
-        String saved;
-        switch (operation) {
-            case "%":
-                saved = temp;
-                label.setText(saved + operation + currentNumber);
-
-            case "/":
-                saved = temp + "" + operation;
-                label.setText(temp + "" + operation);
-
-            case "*":
-                saved = temp + "" + operation;
-                label.setText(temp + "" + operation);
-
-            case "-":
-                saved = temp + "" + operation;
-                label.setText(temp + "" + operation);
-
-            case "+":
-                saved = temp + "" + operation;
-                label.setText(temp + "" + operation);
-        }
     }
 
     @FXML
     private void mod(ActionEvent event) {
-        operation("%");
+        compute("%");
         System.out.println("mod");
-    }
-    
-    @FXML
-    private void division(ActionEvent event) {
-        operation("/");
-        System.out.println("division");
-    }
-
-    @FXML
-    private void multiplication(ActionEvent event) {
-        operation("*");
-        System.out.println("multiplication");
-    }
-
-    @FXML
-    private void substraction(ActionEvent event) {
-        operation("-");
-        System.out.println("substraction");
-
-    }
-
-    @FXML
-    private void addition(ActionEvent event) {
-        operation("+");
-        System.out.println("addition");
-    }
-
-    @FXML
-    private void result(ActionEvent event) {
-        System.out.println("result");
     }
 
     @FXML
     private void plusMinus(ActionEvent event) {
-        double currentNum = Double.parseDouble(currentNumber);
-        currentNumber = currentNum * (-1) + "";
-        label.setText(currentNumber);
+        double currentNum = Double.parseDouble(currentNumberStr);
+        currentNumberStr = currentNum * (-1) + "";
+        label.setText(currentNumberStr);
     }
 
     @FXML
     private void dot(ActionEvent event) {
-        currentNumber += ".";
-        label.setText(currentNumber);
+        currentNumberStr += ".";
+        label.setText(currentNumberStr);
     }
 
     @FXML
@@ -201,7 +207,7 @@ public class FXMLDocumentController implements Initializable {
 
     private void setLabelText(String result) {
         label.setText(result);
-        currentNumber = "";
+        currentNumberStr = "";
     }
 
     private String removeLastChar(String number) {

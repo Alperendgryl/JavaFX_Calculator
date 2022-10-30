@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -239,6 +238,16 @@
             </children>
             
         </GridPane>
-      <TextField fx:id="textField" layoutX="13.0" layoutY="15.0" style="-fx-background-color: #1f1f1f;" />
+      <Label fx:id="label1" alignment="CENTER_RIGHT" layoutX="22.0" layoutY="13.0" prefHeight="15.0" prefWidth="232.0" style="-fx-background-color: #1f1f1f;" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
+      </Label>
     </children>
 </AnchorPane>
