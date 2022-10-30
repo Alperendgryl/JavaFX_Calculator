@@ -11,41 +11,64 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private Label label;
-    
+
     @FXML
     private Label label1;
 
     private double result = 0;
     private String currentNumberStr = "";
+    private String lastOperation = "";
 
     private void compute(String operation) {
-        
+
         double currentNum = Double.parseDouble(currentNumberStr);
         currentNumberStr = " ";
         label1.setText(currentNum + " " + operation);
-        
+
         switch (operation) {
             case "%":
+                if (result == 0) {
+                    result = 1;
+                    result = currentNum;
+                    break;
+                }
                 result = result % currentNum;
                 break;
             case "/":
+                if (result == 0) {
+                    result = 1;
+                    result = currentNum / result;
+                    break;
+                }
                 result /= currentNum;
                 break;
             case "*":
+                if (result == 0) {
+                    result = 1;
+                    result = result * currentNum;
+                    break;
+                }
                 result *= currentNum;
                 break;
             case "-":
+                if (result == 0) {
+                    currentNum *= -1;
+                    result = result - currentNum;
+                    break;
+                }
                 result -= currentNum;
                 break;
             case "+":
                 result += currentNum;
                 break;
             case "=":
+                label1.setText(currentNumberStr + "=");
+                compute(lastOperation);
                 break;
             default:
                 break;
         }
-        
+
         label1.setText(result + " " + operation);
         label.setText(result + " ");
     }
@@ -58,29 +81,36 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void division(ActionEvent event) {
-        compute("/");
+        lastOperation = "/";
+        compute(lastOperation);
+
     }
 
     @FXML
     private void multiplication(ActionEvent event) {
-        compute("*");
+        lastOperation = "*";
+        compute(lastOperation);
+
     }
 
     @FXML
     private void substraction(ActionEvent event) {
-        compute("-");
+        lastOperation = "-";
+        compute(lastOperation);
+
     }
 
     @FXML
     private void addition(ActionEvent event) {
-        compute("+");
+        lastOperation = "+";
+        compute(lastOperation);
     }
 
     @FXML
     private void result(ActionEvent event) {
-        compute("=");
+        compute(lastOperation);
     }
-    
+
     @FXML
     private void ce(ActionEvent event) {
         result = 0;
@@ -145,8 +175,10 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void plusMinus(ActionEvent event) {
         double currentNum = Double.parseDouble(currentNumberStr);
-        currentNumberStr = currentNum * (-1) + "";
-        label.setText(currentNumberStr);
+
+        currentNum = currentNum * (-1);
+        currentNumberStr = currentNum + "";
+        label.setText(currentNum + "");
     }
 
     @FXML

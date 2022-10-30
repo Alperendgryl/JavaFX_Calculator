@@ -91,7 +91,7 @@
                         <DropShadow />
                     </effect>
                 </Button>
-                <Button fx:id="rootXButton" mnemonicParsing="false" onAction="#rootX" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #131313;" text="2√x" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                <Button fx:id="rootXButton" mnemonicParsing="false" onAction="#rootX" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #131313;" text="√x" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
