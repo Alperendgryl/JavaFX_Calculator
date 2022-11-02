@@ -8,63 +8,37 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
 public class FXMLDocumentController implements Initializable {
-
+    
     @FXML
     private Label label;
-
     @FXML
     private Label label1;
 
     private double result = 0;
     private String currentNumberStr = "";
     private String lastOperation = "";
-    private String label1Txt = "";
 
     private void calculate(String operation) {
-
         double currentNum = Double.parseDouble(currentNumberStr);
-        label1Txt += currentNumberStr + " " + operation + " ";
-        currentNumberStr = " ";
-        
-        label1.setText(label1Txt); //currentNum + " " + operation
-
         switch (operation) {
-            case "%":
-                if (result == 0) {
-//                    result = 1;
-//                    System.out.println(result);
-//                    double temp = currentNum;
-//                    System.out.println(temp);
-//                    currentNum = Double.parseDouble(label.getText());
-//                    System.out.println(currentNum);
-//                    result = temp%currentNum;
-//                    System.out.println(result);
-                    break;
-                }
-                result = result % currentNum;
+            case "%": // only modula 10
+                result = currentNum % 10;
                 break;
             case "/":
-                try {
-                    System.out.println("1: " + result);
-                    if (currentNum != 0) {
-                        if (result == 0) {
-                            System.out.println("2: " + result);
-                            result = 1;
-                            result = currentNum / result;
-                            System.out.println("3: " + result);
-                            break;
-                        }
-                        result /= currentNum;
-                        System.out.println("4: " + result);
-                    } else {
-                        System.out.println("5: " + result);
+                double dividend = 0; //bölünen, pay
+                double divisor = 0; //bölen, payda
+                try{
+                    if(divisor == 0){
                         throw new ArithmeticException();
-                        
                     }
-                } catch (ArithmeticException exception) {
-                    System.out.println("6: " + result);
-                    resetCalculator("undefined", "Division by zero : undefined");
-                    System.out.println("Division by zero : undefined");
+                    if(divisor == 0 && dividend == 0){
+                        throw new ArithmeticException();
+                    }
+                    result = dividend / divisor;
+                    label.setText(result + "");
+                }
+                catch (ArithmeticException exception){
+                    resetCalculator("undefined", "division by zero");
                 }
                 break;
             case "*":
@@ -86,15 +60,12 @@ public class FXMLDocumentController implements Initializable {
             case "+":
                 result += currentNum;
                 break;
-            case "=":
-                label1.setText(currentNumberStr + "=");
-                calculate(lastOperation);
-                break;
             default:
                 break;
         }
-        //label1.setText(result + " " + operation);
-        label.setText(result + " ");
+        currentNumberStr = "";
+        label1.setText(result + " " + operation);
+        label.setText(result + "");
     }
 
     @FXML
@@ -107,21 +78,18 @@ public class FXMLDocumentController implements Initializable {
     private void division(ActionEvent event) {
         lastOperation = "/";
         calculate(lastOperation);
-
     }
 
     @FXML
     private void multiplication(ActionEvent event) {
         lastOperation = "*";
         calculate(lastOperation);
-
     }
 
     @FXML
     private void substraction(ActionEvent event) {
         lastOperation = "-";
         calculate(lastOperation);
-
     }
 
     @FXML
@@ -131,8 +99,12 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void result(ActionEvent event) {
+    private void result(ActionEvent event) { //result = result + (operation) + currentNumber
+        String temp = result + "" + lastOperation + "" + currentNumberStr + "=";
+        String tempCurrent = currentNumberStr;
         calculate(lastOperation);
+        label1.setText(temp);
+        currentNumberStr = tempCurrent;
     }
 
     @FXML
@@ -266,7 +238,6 @@ public class FXMLDocumentController implements Initializable {
     private void resetCalculator(String labelText, String label1Text){
         result = 0;
         currentNumberStr = "";
-        label1Txt = "";
         label.setText(labelText);
         label1.setText(label1Text);
     }
