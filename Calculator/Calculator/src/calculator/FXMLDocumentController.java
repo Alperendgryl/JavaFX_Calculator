@@ -7,9 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
-//MUHAMMED ALPEREN DOĞRUYOL 218CS2085
-//ONUR BIÇAK 218CS2103
-
 public class FXMLDocumentController implements Initializable {
 
     @FXML
